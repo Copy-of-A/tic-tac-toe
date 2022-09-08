@@ -15,7 +15,7 @@ const Board: React.FC<BoardProps> = ({ squares, winningCombination, onClick }) =
                 key={i}
                 value={squares[i]}
                 onClick={() => onClick(i)}
-                winningCombination={winningCombination?.lineNumberArray?.findIndex(el => el === i) !== -1}
+                winningCombination={!!winningCombination?.lineNumberArray && winningCombination?.lineNumberArray?.findIndex(el => el === i) !== -1}
             />
         );
     }

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import Board from "./Board";
 import { useState } from "react";
+import { GameContext } from "../App";
 
 enum WiningLine {
     Horizontal = "horizontal",
@@ -15,6 +16,7 @@ export interface WinningCombination {
 }
 
 const Game: React.FC = () => {
+    const { gameSetup } = useContext(GameContext);
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [isX, setIsX] = useState(true);
     const [winningCombination, setWinningCombination] = useState<WinningCombination | null>(null);
@@ -122,14 +124,20 @@ const Game: React.FC = () => {
     } else if (getFreeSquares().length === 0) {
         status = "Game over: dead heat!";
     } else {
-        status = "Next player: " + (isX ? "X" : "O");
+        status = "Next player: " + (isX ? gameSetup.gamerFirst : gameSetup.gamerSecond);
     }
+
+    const newGameHandleClick = () => {
+        setSquares(Array(9).fill(null));
+        setIsX(true);
+      };
 
 
     return (
         <div>
             <span>{status}</span>
             <Board squares={squares} winningCombination={winningCombination} onClick={(i) => handleClick(i)} />
+            <button onClick={newGameHandleClick}>new game</button>
         </div>
     );
 }
