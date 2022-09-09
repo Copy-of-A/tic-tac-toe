@@ -1,0 +1,42 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  &_3 {
+    grid-template-rows: repeat(3, 50px);
+    grid-template-columns: repeat(3, 50px);
+  }
+  &_5 {
+    grid-template-rows: repeat(5, 50px);
+    grid-template-columns: repeat(5, 50px);
+  }
+  &_10 {
+    grid-template-rows: repeat(10, 50px);
+    grid-template-columns: repeat(10, 50px);
+  }
+
+  .square {
+    display: block;
+    border: 1px solid black;
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+
+button {
+  margin-top: 30px;
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+}
+
+.flex-jstf {
+  display: flex;
+  justify-content: space-between;
+}

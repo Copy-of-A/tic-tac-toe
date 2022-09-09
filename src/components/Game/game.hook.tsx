@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../App";
@@ -8,18 +9,29 @@ const O = "O";
 
 const useGame = () => {
     const { gameSetup } = useContext(GameContext);
-    const [squares, setSquares] = useState(Array(9).fill(null));
+    const [borderSize, setBorderSize] = useState<string>("3");
+    const [squares, setSquares] = useState(Array((+borderSize) ** 2).fill(null));
     const [isX, setIsX] = useState(true);
     const [winningCombination, setWinningCombination] = useState<WinningCombination | null>(null);
-    const [history, setHistory] = useState<Array<Array<null | string>>>(
-        [Array(9).fill(null)],
+    const [gameHistory, setGameHistory] = useState<Array<Array<null | string>>>(
+        [Array((+borderSize) ** 2).fill(null)],
     );
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!gameSetup.isPvP && (isX && !gameSetup.isFirstForX || !isX && gameSetup.isFirstForX)) {
             setTimeout(() => computerHandleClick(), 1000);
         }
     }, [isX]);
+
+    useEffect(() => {
+        if (gameSetup.gamerFirst === null) navigate("/");
+    }, [gameSetup])
+
+    useEffect(() => {
+        setSquares(Array((+borderSize) ** 2).fill(null));
+    }, [borderSize]);
 
     const computerHandleClick = () => {
         let _freeSquares = getFreeSquares(squares);
@@ -34,7 +46,7 @@ const useGame = () => {
         const _squares = [...squares];
         _squares[i] = isX ? X : O;
         setSquares(_squares);
-        setHistory(prevState => (
+        setGameHistory(prevState => (
             prevState.concat([_squares])
         ))
         setIsX(!isX);
@@ -42,14 +54,16 @@ const useGame = () => {
     };
 
     const handleBackToPreviousStep = () => {
-        setHistory(prevState => (
+        if (winningCombination) setWinningCombination(null);
+        setIsX(!isX);
+        setGameHistory(prevState => (
             prevState.slice(0, -1)
         ))
     };
 
     useEffect(() => {
-        setSquares(history[history.length - 1]);
-    }, [history])
+        setSquares(gameHistory[gameHistory.length - 1]);
+    }, [gameHistory])
 
     const getWinnerName = (wonSquare: string) => {
         if (wonSquare === X) {
@@ -75,12 +89,14 @@ const useGame = () => {
 
     const newGameHandleClick = () => {
         setWinningCombination(null);
-        setSquares(Array(9).fill(null));
+        setSquares(Array((+borderSize) ** 2).fill(null));
         setIsX(true);
     };
 
-    const navigate = useNavigate();
-    
+    const handleChangeBorderSize = (event: SelectChangeEvent) => {
+        setBorderSize((+event.target.value).toString() as string);
+    };
+
     return {
         squares,
         status,
@@ -89,6 +105,9 @@ const useGame = () => {
         handleBackToPreviousStep,
         navigate,
         handleClick,
+        borderSize,
+        handleChangeBorderSize,
+        gameHistory,
     }
 }
 

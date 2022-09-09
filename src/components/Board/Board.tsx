@@ -1,14 +1,15 @@
 import React from "react";
-import { WinningCombination } from "../Game/Game";
+import { WinningCombination } from "../Game/game.algoritms";
 import Square from "../Square/Square";
 
 export interface BoardProps {
     squares: string[];
     winningCombination: WinningCombination | null;
+    size: number;
     onClick: (i: number) => void;
 };
 
-const Board: React.FC<BoardProps> = ({ squares, winningCombination, onClick }) => {
+const Board: React.FC<BoardProps> = ({ squares, winningCombination, size, onClick }) => {
     function getSquare(i: number) {
         return (
             <Square
@@ -28,7 +29,7 @@ const Board: React.FC<BoardProps> = ({ squares, winningCombination, onClick }) =
         return arr;
     }
 
-    return <div className="grid">{getAllSquares()}</div>;
+    return <div className={`grid grid_${size}`}>{getAllSquares()}</div>;
 }
 
 export default Board;

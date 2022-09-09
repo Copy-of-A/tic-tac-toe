@@ -1,47 +1,19 @@
 import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
-import React, { useContext } from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { GameContext } from "../../../../App";
+import React from "react";
+import useSinglePlayerModeSetup from "./singlePlayerModeSetup.hook";
 
 const Mode: React.FC = () => {
-    const navigate = useNavigate();
-    const [form, setForm] = useState<{ name: string; isX: boolean }>({
-        name: "",
-        isX: true,
-    });
-    const { setGameSetup } = useContext(GameContext);
-    const [error, setError] = useState<boolean>(false);
-
-    const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setForm((form) => ({
-            ...form,
-            name: event.target.value,
-        }));
-    };
-
-    const handleChangeX = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setForm((form) => ({
-            ...form,
-            isX: event.target.checked,
-        }));
-    };
-
-    const onStartClick = () => {
-        if (!form.name) {
-            setError(true);
-            return;
-        }
-        setGameSetup({
-            gamerFirst: form.name,
-            gamerSecond: "computer",
-            isFirstForX: form.isX,
-            isPvP: false,
-        });
-        navigate('/game', { replace: true })
-    }
+    const {
+        error,
+        setError,
+        handleChangeName,
+        navigate,
+        form,
+        handleChangeX,
+        onStartClick,
+    } = useSinglePlayerModeSetup();
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>

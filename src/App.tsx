@@ -1,4 +1,4 @@
-import './App.css'
+import './App.scss'
 import Mode from './components/Mode/Mode'
 import { Route, Routes } from "react-router-dom";
 import PvPSetup from './components/Mode/components/MultiplayerModeSetup/MultiplayerModeSetup';
