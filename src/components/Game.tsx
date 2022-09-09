@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Board from "./Board";
 import { useState } from "react";
 import { GameContext } from "../App";
+import Button from "@mui/material/Button";
 
 enum WiningLine {
     Horizontal = "horizontal",
@@ -23,6 +24,9 @@ const Game: React.FC = () => {
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [isX, setIsX] = useState(true);
     const [winningCombination, setWinningCombination] = useState<WinningCombination | null>(null);
+    const [history, setHistory] = useState<Array<Array<null | string>>>(
+        [Array(9).fill(null)],
+    );
 
     useEffect(() => {
         if (!gameSetup.isPvP && (isX && !gameSetup.isFirstForX || !isX && gameSetup.isFirstForX)) {
@@ -33,10 +37,10 @@ const Game: React.FC = () => {
     const computerHandleClick = () => {
         let _freeSquares = getFreeSquares();
         const randomNum = Math.floor(
-          Math.random() * Math.floor(_freeSquares.length)
+            Math.random() * Math.floor(_freeSquares.length)
         );
         handleClick(_freeSquares[randomNum]);
-      };
+    };
 
     const checkHorizontal = (_squares: number[], currentSquare: number, lineLength: number) => {
         const mainRoot = _squares[currentSquare]; // item that has been clicked;
@@ -120,9 +124,22 @@ const Game: React.FC = () => {
         const _squares = [...squares];
         _squares[i] = isX ? X : O;
         setSquares(_squares);
+        setHistory(prevState => (
+            prevState.concat([_squares])
+        ))
         setIsX(!isX);
         setWinningCombination(getWinner(_squares, i));
     };
+
+    const handleBackToPreviousStep = () => {
+        setHistory(prevState => (
+            prevState.slice(0, -1)
+        ))
+    };
+
+    useEffect(() => {
+        setSquares(history[history.length - 1]);
+    }, [history])
 
     const getFreeSquares = () => {
         let _freeSquares: number[] = [];
@@ -134,7 +151,7 @@ const Game: React.FC = () => {
         return _freeSquares;
     };
 
-    const getWinnerName = (wonSquare : string) => {
+    const getWinnerName = (wonSquare: string) => {
         if (wonSquare === X) {
             return gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond
         }
@@ -152,7 +169,7 @@ const Game: React.FC = () => {
             status = "Next player: " + (gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond)
         }
         else {
-            status = "Next player: " +  (gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst)
+            status = "Next player: " + (gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst)
         }
     }
 
@@ -167,7 +184,8 @@ const Game: React.FC = () => {
         <div>
             <span>{status}</span>
             <Board squares={squares} winningCombination={winningCombination} onClick={(i) => handleClick(i)} />
-            <button onClick={newGameHandleClick}>new game</button>
+            <Button onClick={newGameHandleClick}>new game</Button>
+            <Button onClick={handleBackToPreviousStep} disabled={history.length < 2}>Cansel step</Button>
         </div>
     );
 }
