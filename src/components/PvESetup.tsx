@@ -30,7 +30,6 @@ const Mode: React.FC = () => {
     };
 
     const onStartClick = () => {
-        console.log("form.name", form.name)
         if (!form.name) {
             setError(true);
             return;

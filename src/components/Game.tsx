@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Board from "./Board";
 import { useState } from "react";
 import { GameContext } from "../App";
@@ -20,10 +20,23 @@ export interface WinningCombination {
 
 const Game: React.FC = () => {
     const { gameSetup } = useContext(GameContext);
-    console.log("gameSetup", gameSetup)
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [isX, setIsX] = useState(true);
     const [winningCombination, setWinningCombination] = useState<WinningCombination | null>(null);
+
+    useEffect(() => {
+        if (!gameSetup.isPvP && (isX && !gameSetup.isFirstForX || !isX && gameSetup.isFirstForX)) {
+            setTimeout(() => computerHandleClick(), 1000);
+        }
+    }, [isX]);
+
+    const computerHandleClick = () => {
+        let _freeSquares = getFreeSquares();
+        const randomNum = Math.floor(
+          Math.random() * Math.floor(_freeSquares.length)
+        );
+        handleClick(_freeSquares[randomNum]);
+      };
 
     const checkHorizontal = (_squares: number[], currentSquare: number, lineLength: number) => {
         const mainRoot = _squares[currentSquare]; // item that has been clicked;
