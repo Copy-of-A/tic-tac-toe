@@ -4,12 +4,14 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../App";
+import Switch from "@mui/material/Switch";
 
 const Mode: React.FC = () => {
     const { setGameSetup } = useContext(GameContext);
-    const [form, setForm] = useState<{ nameFirst: string; nameSecond: string }>({
+    const [form, setForm] = useState<{ nameFirst: string; nameSecond: string, isX: boolean }>({
         nameFirst: "",
         nameSecond: "",
+        isX: true,
     });
     const [error, setErrors] = useState<{ nameFirstError: string | null; nameSecondError: string | null }>({
         nameFirstError: null,
@@ -23,7 +25,7 @@ const Mode: React.FC = () => {
         setGameSetup({
             gamerFirst: form.nameFirst,
             gamerSecond: form.nameSecond,
-            isX: true,
+            isFirstForX: form.isX,
             isPvP: true,
         });
         navigate('/game', { replace: true });
@@ -75,6 +77,13 @@ const Mode: React.FC = () => {
         }))
     }
 
+    const handleChangeX = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setForm((form) => ({
+            ...form,
+            isX: event.target.checked,
+        }));
+    };
+
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <TextField
@@ -96,6 +105,13 @@ const Mode: React.FC = () => {
                 error={!!error.nameSecondError}
                 onBlur={onBlur}
                 onFocus={onBlur}
+            />
+            <span>First gamer play for "X": </span>
+            <Switch
+                checked={form.isX}
+                onChange={handleChangeX}
+                value="checked"
+                color="primary"
             />
             <div className="flex-jstf">
                 <Button

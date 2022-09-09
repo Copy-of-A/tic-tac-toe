@@ -38,8 +38,8 @@ const Mode: React.FC = () => {
         setGameSetup({
             gamerFirst: form.name,
             gamerSecond: "computer",
-            isX: true,
-            isPvP: true,
+            isFirstForX: form.isX,
+            isPvP: false,
         });
         navigate('/game', { replace: true })
     }

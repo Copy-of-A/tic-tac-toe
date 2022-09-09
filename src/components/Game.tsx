@@ -10,6 +10,9 @@ enum WiningLine {
     SecondaryDiagonal = "secondaruDiagonal",
 };
 
+const X = "X";
+const O = "O";
+
 export interface WinningCombination {
     winingLine: WiningLine | null,
     lineNumberArray: number[] | null;
@@ -17,6 +20,7 @@ export interface WinningCombination {
 
 const Game: React.FC = () => {
     const { gameSetup } = useContext(GameContext);
+    console.log("gameSetup", gameSetup)
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [isX, setIsX] = useState(true);
     const [winningCombination, setWinningCombination] = useState<WinningCombination | null>(null);
@@ -101,7 +105,7 @@ const Game: React.FC = () => {
     const handleClick = (i: number) => {
         if (squares[i] || winningCombination) return;
         const _squares = [...squares];
-        _squares[i] = isX ? "X" : "O";
+        _squares[i] = isX ? X : O;
         setSquares(_squares);
         setIsX(!isX);
         setWinningCombination(getWinner(_squares, i));
@@ -117,20 +121,33 @@ const Game: React.FC = () => {
         return _freeSquares;
     };
 
+    const getWinnerName = (wonSquare : string) => {
+        if (wonSquare === X) {
+            return gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond
+        }
+        else return gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst
+    }
+
     const winner = winningCombination?.lineNumberArray;
     let status;
     if (winner) {
-        status = "Winner: " + squares[winner[0]];
+        status = "Winner: " + getWinnerName(squares[winner[0]]) + " played for: " + squares[winner[0]];
     } else if (getFreeSquares().length === 0) {
         status = "Game over: dead heat!";
     } else {
-        status = "Next player: " + (isX ? gameSetup.gamerFirst : gameSetup.gamerSecond);
+        if (isX) {
+            status = "Next player: " + (gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond)
+        }
+        else {
+            status = "Next player: " +  (gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst)
+        }
     }
 
     const newGameHandleClick = () => {
+        setWinningCombination(null);
         setSquares(Array(9).fill(null));
         setIsX(true);
-      };
+    };
 
 
     return (
