@@ -1,7 +1,7 @@
 import React from "react";
-import Board from "../Board/Board";
+import Board from "../../components/Board/Board";
 import useGame from "./game.hook";
-import { InputLabel, FormControl, Button, Select, MenuItem } from "@mui/material";
+import { InputLabel, FormControl, Button, Select, MenuItem, Typography } from "@mui/material";
 
 const Game: React.FC = () => {
     const {
@@ -15,10 +15,10 @@ const Game: React.FC = () => {
         borderSize,
         handleChangeBorderSize,
         gameHistory,
+        gameSetup,
+        rating,
     } = useGame();
-
-    console.log("squares", squares)
-
+    
     return (
         <div>
             <span>{status}</span>
@@ -36,6 +36,10 @@ const Game: React.FC = () => {
                     <MenuItem value={10}>10 - Ten</MenuItem>
                 </Select>
             </FormControl>
+            <Typography variant="h3">Rating</Typography>
+            <Typography>{gameSetup.gamerFirst} : {rating.firstGamerVictories}</Typography>
+            <Typography>{gameSetup.gamerSecond} : {rating.secondGamerVictories}</Typography>
+            <Typography>Draws: : {rating.draws}</Typography>
             <Board
                 squares={squares}
                 winningCombination={winningCombination}

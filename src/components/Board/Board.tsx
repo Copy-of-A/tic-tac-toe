@@ -1,5 +1,5 @@
 import React from "react";
-import { WinningCombination } from "../Game/game.algoritms";
+import { WinningCombination } from "../../scenes/Game/game.algoritms";
 import Square from "../Square/Square";
 
 export interface BoardProps {

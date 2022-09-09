@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GameContext } from "../../../../App";
+import { GameContext } from "../../App";
 
 const useSinglePlayerModeSetup = () => {
     const navigate = useNavigate();

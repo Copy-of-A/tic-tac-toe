@@ -7,6 +7,12 @@ import { getFreeSquares, getWinner, WinningCombination } from "./game.algoritms"
 const X = "X";
 const O = "O";
 
+interface Rating {
+    firstGamerVictories: number;
+    secondGamerVictories: number;
+    draws: number;
+}
+
 const useGame = () => {
     const { gameSetup } = useContext(GameContext);
     const [borderSize, setBorderSize] = useState<string>("3");
@@ -16,6 +22,13 @@ const useGame = () => {
     const [gameHistory, setGameHistory] = useState<Array<Array<null | string>>>(
         [Array((+borderSize) ** 2).fill(null)],
     );
+    const [rating, setRating] = useState<Rating>({
+        firstGamerVictories: 0,
+        secondGamerVictories: 0,
+        draws: 0,
+    });
+    const [isDeadHeat, setDeadHeat] = useState<boolean>(false);
+    const [lastWinner, setLastWinner] = useState<number | null>(null);
 
     const navigate = useNavigate();
 
@@ -32,6 +45,41 @@ const useGame = () => {
     useEffect(() => {
         setSquares(Array((+borderSize) ** 2).fill(null));
     }, [borderSize]);
+
+    useEffect(() => {
+        setSquares(gameHistory[gameHistory.length - 1]);
+    }, [gameHistory]);
+
+    useEffect(() => {
+        if (winningCombination !== null) {
+            const winner = winningCombination?.lineNumberArray;
+            if (getWinnerName(squares[winner![0]] === X) === gameSetup.gamerFirst) {
+                setRating((rating) => ({
+                    ...rating,
+                    firstGamerVictories: rating.firstGamerVictories + 1,
+                }));
+                setLastWinner(1);
+            }
+            else {
+                setRating((rating) => ({
+                    ...rating,
+                    secondGamerVictories: rating.secondGamerVictories + 1,
+                }))
+                setLastWinner(2);
+            }
+
+        }
+    }, [winningCombination]);
+
+    useEffect(() => {
+        if (isDeadHeat) {
+            setRating((rating) => ({
+                ...rating,
+                draws: rating.draws + 1,
+            }))
+            setLastWinner(0);
+        }
+    }, [isDeadHeat])
 
     const computerHandleClick = () => {
         let _freeSquares = getFreeSquares(squares);
@@ -51,6 +99,9 @@ const useGame = () => {
         ))
         setIsX(!isX);
         setWinningCombination(getWinner(_squares, i));
+        if (getFreeSquares(_squares).length === 0) {
+            setDeadHeat(true)
+        }
     };
 
     const handleBackToPreviousStep = () => {
@@ -58,15 +109,32 @@ const useGame = () => {
         setIsX(!isX);
         setGameHistory(prevState => (
             prevState.slice(0, -1)
-        ))
+        ));
+        switch (lastWinner) {
+            case 0:
+                setRating((rating) => ({
+                    ...rating,
+                    draws: rating.draws - 1,
+                }));
+                break;
+            case 1:
+                setRating((rating) => ({
+                    ...rating,
+                    firstGamerVictories: rating.firstGamerVictories - 1,
+                }));
+                break;
+            case 2:
+                setRating((rating) => ({
+                    ...rating,
+                    secondGamerVictories: rating.secondGamerVictories - 1,
+                }));
+                break;
+        }
+        setLastWinner(null);
     };
 
-    useEffect(() => {
-        setSquares(gameHistory[gameHistory.length - 1]);
-    }, [gameHistory])
-
-    const getWinnerName = (wonSquare: string) => {
-        if (wonSquare === X) {
+    const getWinnerName = (xCondition: boolean) => {
+        if (xCondition) {
             return gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond
         }
         else return gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst
@@ -75,21 +143,17 @@ const useGame = () => {
     const winner = winningCombination?.lineNumberArray;
     let status;
     if (winner) {
-        status = "Winner: " + getWinnerName(squares[winner[0]]) + " played for: " + squares[winner[0]];
-    } else if (getFreeSquares(squares).length === 0) {
+        status = "Winner: " + getWinnerName(squares[winner[0]] === X) + " played for: " + squares[winner[0]];
+    } else if (isDeadHeat) {
         status = "Game over: dead heat!";
     } else {
-        if (isX) {
-            status = "Next player: " + (gameSetup.isFirstForX ? gameSetup.gamerFirst : gameSetup.gamerSecond)
-        }
-        else {
-            status = "Next player: " + (gameSetup.isFirstForX ? gameSetup.gamerSecond : gameSetup.gamerFirst)
-        }
+        status = "Next player: " + getWinnerName(isX);
     }
 
     const newGameHandleClick = () => {
         setWinningCombination(null);
         setSquares(Array((+borderSize) ** 2).fill(null));
+        setDeadHeat(false);
         setIsX(true);
     };
 
@@ -108,6 +172,8 @@ const useGame = () => {
         borderSize,
         handleChangeBorderSize,
         gameHistory,
+        gameSetup,
+        rating,
     }
 }
 
