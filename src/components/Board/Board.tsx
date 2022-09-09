@@ -1,6 +1,6 @@
 import React from "react";
-import { WinningCombination } from "./Game";
-import Square from "./Square";
+import { WinningCombination } from "../Game/Game";
+import Square from "../Square/Square";
 
 export interface BoardProps {
     squares: string[];
@@ -28,8 +28,7 @@ const Board: React.FC<BoardProps> = ({ squares, winningCombination, onClick }) =
         return arr;
     }
 
-    const allSquares = getAllSquares();
-    return <div className="grid">{allSquares}</div>;
+    return <div className="grid">{getAllSquares()}</div>;
 }
 
 export default Board;

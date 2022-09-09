@@ -1,5 +1,4 @@
 import React from "react";
-import { WinningCombination } from "./Game";
 
 export interface SquareProps {
     value: string;

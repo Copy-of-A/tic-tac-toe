@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GameContext } from "../App";
+import { GameContext } from "../../../../App";
 
 const Mode: React.FC = () => {
     const navigate = useNavigate();
@@ -42,8 +42,6 @@ const Mode: React.FC = () => {
         });
         navigate('/game', { replace: true })
     }
-
-    const label = { inputProps: { 'aria-label': "Play by crosses" } };
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>

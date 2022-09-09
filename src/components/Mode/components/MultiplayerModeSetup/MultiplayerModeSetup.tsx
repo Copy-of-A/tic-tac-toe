@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
-import { GameContext } from "../App";
+import { GameContext } from "../../../../App";
 import Switch from "@mui/material/Switch";
 
 const Mode: React.FC = () => {

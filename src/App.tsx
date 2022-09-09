@@ -1,9 +1,9 @@
 import './App.css'
-import Mode from './components/Mode'
+import Mode from './components/Mode/Mode'
 import { Route, Routes } from "react-router-dom";
-import PvPSetup from './components/PvPSetup';
-import PvESetup from './components/PvESetup';
-import Game from './components/Game';
+import PvPSetup from './components/Mode/components/MultiplayerModeSetup/MultiplayerModeSetup';
+import PvESetup from './components/Mode/components/SinglePlayerModeSetup/SinglePlayerModeSetup';
+import Game from './components/Game/Game';
 import { useState } from 'react';
 import React from 'react';
 
