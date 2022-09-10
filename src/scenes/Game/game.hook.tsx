@@ -45,7 +45,7 @@ const useGame = () => {
     }, [isX]);
 
     useEffect(() => {
-        if (gameSetup.gamerFirst === null) navigate("/");
+        if (gameSetup.gamerFirst === null) navigate("/mode");
     }, [gameSetup]);
 
     useEffect(() => {

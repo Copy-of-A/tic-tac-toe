@@ -1,5 +1,5 @@
 import React from "react";
-import useMultiplayerModeSetup from "./multiplayerModeSetup,hook";
+import useMultiplayerModeSetup from "./multiplayerModeSetup.hook";
 import { Button, TextField } from "@mui/material";
 import ChooseXPlayerRadioGroup from "../../components/ChooseXPlayerRadioGroup/ChooseXPlayerRadioGroup";
 

@@ -1,6 +1,6 @@
 import './App.scss'
 import Mode from './scenes/Mode/Mode'
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PvPSetup from './scenes/MultiplayerModeSetup/MultiplayerModeSetup';
 import PvESetup from './scenes/SinglePlayerModeSetup/SinglePlayerModeSetup';
 import Game from './scenes/Game/Game';
@@ -35,10 +35,11 @@ function App() {
     <GameContext.Provider value={value}>
       <ThemeProvider theme={darkTheme}>
         <Routes>
-          <Route path="" element={<Mode />} />
+          <Route path="/mode" element={<Mode />} />
           <Route path="pvp" element={<PvPSetup />} />
           <Route path="pve" element={<PvESetup />} />
           <Route path="game" element={<Game />} />
+          <Route path="*" element={<Navigate to="/mode" replace />} />
         </Routes>
       </ThemeProvider>
     </GameContext.Provider>
