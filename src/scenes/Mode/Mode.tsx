@@ -7,7 +7,7 @@ const Mode: React.FC = () => {
         <div className="page">
             <h1>Choose how to play:</h1>
             <div className="button-container">
-                <Link to={"pvp"}>
+                <Link to={"/pvp"}>
                     <Button
                         variant="contained"
                         color="secondary"
@@ -15,7 +15,7 @@ const Mode: React.FC = () => {
                         PvP
                     </Button>
                 </Link>
-                <Link to={"pve"}>
+                <Link to={"/pve"}>
                     <Button
                         variant="contained"
                         color="secondary"
