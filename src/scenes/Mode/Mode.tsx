@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Mode: React.FC = () => {
     return (
-        <div>
+        <div className="page">
             <h1>Choose how to play:</h1>
-            <div className="flex-jstf">
+            <div className="button-container">
                 <Link to={"pvp"}>
                     <Button
                         variant="contained"

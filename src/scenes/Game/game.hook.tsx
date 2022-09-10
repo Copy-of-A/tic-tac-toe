@@ -49,10 +49,6 @@ const useGame = () => {
     }, [gameSetup]);
 
     useEffect(() => {
-        console.log("isComputerMoving", isComputerMoving)
-    }, [isComputerMoving])
-
-    useEffect(() => {
         setSquares(Array((+borderSize) ** 2).fill(null));
     }, [borderSize]);
 

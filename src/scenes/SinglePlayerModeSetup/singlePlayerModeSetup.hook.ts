@@ -33,7 +33,7 @@ const useSinglePlayerModeSetup = () => {
         }
         setGameSetup({
             gamerFirst: form.name,
-            gamerSecond: "computer",
+            gamerSecond: "Computer",
             isFirstForX: form.xPlayer === 0 ? getRandomNumber(1, 3) === 1 : form.xPlayer === 1,
             isPvE: true,
         });

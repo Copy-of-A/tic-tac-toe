@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React from "react";
-import ChoosePlayerRadioGroup from "../../components/ChoosePlayerRadioGroup/ChoosePlayerRadioGroup";
+import ChooseXPlayerRadioGroup from "../../components/ChooseXPlayerRadioGroup/ChooseXPlayerRadioGroup";
 import useSinglePlayerModeSetup from "./singlePlayerModeSetup.hook";
 
 const Mode: React.FC = () => {
@@ -15,27 +15,31 @@ const Mode: React.FC = () => {
     } = useSinglePlayerModeSetup();
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <TextField
-                label="Your name"
-                variant="outlined"
-                helperText={error ? "Shouldn`t be empty" : "Enter name"}
-                color="primary"
-                error={error}
-                onChange={handleChangeName}
-                onBlur={() => setError(false)}
-                onFocus={() => setError(false)}
-            />
-            <ChoosePlayerRadioGroup
-                value={form.xPlayer.toString()}
-                handleChange={handleChangeX}
-                labels={[
-                    "You",
-                    "Computer",
-                    "Choose at random"
-                ]}
-            />
-            <div className="flex-jstf">
+        <div className="page">
+            <div className="page setup">
+                <TextField
+                    label="Name"
+                    variant="outlined"
+                    helperText={error ? "Shouldn`t be empty" : "Enter your name"}
+                    color="secondary"
+                    error={error}
+                    onChange={handleChangeName}
+                    onBlur={() => setError(false)}
+                    onFocus={() => setError(false)}
+                    fullWidth
+                />
+                <ChooseXPlayerRadioGroup
+                    value={form.xPlayer.toString()}
+                    handleChange={handleChangeX}
+                    labels={[
+                        "Me",
+                        "Computer",
+                        "Choose at random"
+                    ]}
+                    className="setup__group setup__group_margin"
+                />
+            </div>
+            <div className="button-container">
                 <Button
                     onClick={() => navigate(-1)}
                     variant="contained"

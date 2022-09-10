@@ -1,3 +1,11 @@
+$tiny-breakpoint: 390px;
+$small-breakpoint: 450px;
+$medium-breakpoint: 600px;
+$big-breakpoint: 900px;
+$big-square: 50px;
+$small-square: 25px;
+$medium-square: 30px;
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -7,18 +15,7 @@
 
 .grid {
   display: grid;
-  &_3 {
-    grid-template-rows: repeat(3, 50px);
-    grid-template-columns: repeat(3, 50px);
-  }
-  &_5 {
-    grid-template-rows: repeat(5, 50px);
-    grid-template-columns: repeat(5, 50px);
-  }
-  &_10 {
-    grid-template-rows: repeat(10, 50px);
-    grid-template-columns: repeat(10, 50px);
-  }
+  margin-top: 20px;
 
   .square {
     display: block;
@@ -27,16 +24,117 @@
     line-height: 50px;
     text-align: center;
   }
+
+  &_3 {
+    grid-template-rows: repeat(3, $big-square);
+    grid-template-columns: repeat(3, $big-square);
+  }
+
+  &_5 {
+    grid-template-rows: repeat(5, $big-square);
+    grid-template-columns: repeat(5, $big-square);
+  }
+
+  &_10 {
+    grid-template-rows: repeat(10, $big-square);
+    grid-template-columns: repeat(10, $big-square);
+
+    @media(max-width: $medium-breakpoint) {
+      grid-template-rows: repeat(10, 35px);
+      grid-template-columns: repeat(10, 35px);
+
+      .square {
+        line-height: 32px;
+        font-size: 24px;
+      }
+    }
+
+    @media(max-width: $small-breakpoint) {
+      grid-template-rows: repeat(10, 30px);
+      grid-template-columns: repeat(10, 30px);
+
+      .square {
+        line-height: 32px;
+        font-size: 20px;
+      }
+    }
+
+    @media(max-width: $tiny-breakpoint) {
+      grid-template-rows: repeat(10, 25px);
+      grid-template-columns: repeat(10, 25px);
+
+      .square {
+        line-height: 25px;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+  margin-top: 50px;
+
+  @media(max-width: $big-breakpoint) {
+    align-items: center;
+    flex-direction: column;
+    height: 130px;
+    width: auto;
+  }
+
+  @media(max-width: $tiny-breakpoint) {
+    height: 100px;
+  }
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setup {
+  width: 320px;
+
+  @media(max-width: $tiny-breakpoint) {
+    width: 250px;
+  }
+
+  &__group {
+    align-self: flex-start;
+    text-align: left;
+
+    &_margin {
+      margin-top: 30px !important;
+    }
+  }
+
+  &__text-field {
+    &_bottom {
+      margin-bottom: 15px !important;
+    }
+  }
 }
 
 button {
-  margin-top: 30px;
-  width: 200px;
+  width: 320px;
   height: 50px;
   font-size: 16px;
+
+  @media(max-width: $tiny-breakpoint) {
+    width: 250px;
+    height: 40px;
+    flex-direction: column;
+  }
 }
 
-.flex-jstf {
-  display: flex;
-  justify-content: space-between;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+
+  @media(max-width: $medium-breakpoint) {
+    font-size: 2.5em;
+  }
 }

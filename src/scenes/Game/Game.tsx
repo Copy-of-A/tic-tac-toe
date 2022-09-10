@@ -18,37 +18,65 @@ const Game: React.FC = () => {
         gameSetup,
         rating,
     } = useGame();
-    
+
     return (
-        <div>
-            <span>{status}</span>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={borderSize}
-                    label="Border size"
-                    onChange={handleChangeBorderSize}
+        <div className="page">
+            <div className="page setup">
+                <FormControl style={{ width: "100%" }} color="secondary">
+                    <InputLabel color="secondary" id="demo-simple-select-label">Board size</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={borderSize}
+                        label="Border size"
+                        onChange={handleChangeBorderSize}
+                        color="secondary"
+                    >
+                        <MenuItem color="secondary" value={3}>3 - Three</MenuItem>
+                        <MenuItem color="secondary" value={5}>5 - Five</MenuItem>
+                        <MenuItem color="secondary" value={10}>10 - Ten</MenuItem>
+                    </Select>
+                </FormControl>
+                <Typography className="setup__group setup__group_margin" variant="h5">Rating:</Typography>
+                <Typography className="setup__group">{gameSetup.gamerFirst} : {rating.firstGamerVictories}</Typography>
+                <Typography className="setup__group">{gameSetup.gamerSecond} : {rating.secondGamerVictories}</Typography>
+                <Typography className="setup__group">Draws: : {rating.draws}</Typography>
+            </div>
+            <div>
+                <h2>{status}</h2>
+                <Board
+                    squares={squares}
+                    winningCombination={winningCombination}
+                    onClick={(i) => handleClick(i)}
+                    size={+borderSize}
+                />
+            </div>
+            <div className="button-container">
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={newGameHandleClick}
                 >
-                    <MenuItem value={3}>3 - Three</MenuItem>
-                    <MenuItem value={5}>5 - Five</MenuItem>
-                    <MenuItem value={10}>10 - Ten</MenuItem>
-                </Select>
-            </FormControl>
-            <Typography variant="h3">Rating</Typography>
-            <Typography>{gameSetup.gamerFirst} : {rating.firstGamerVictories}</Typography>
-            <Typography>{gameSetup.gamerSecond} : {rating.secondGamerVictories}</Typography>
-            <Typography>Draws: : {rating.draws}</Typography>
-            <Board
-                squares={squares}
-                winningCombination={winningCombination}
-                onClick={(i) => handleClick(i)}
-                size={+borderSize}
-            />
-            <Button onClick={newGameHandleClick}>new game</Button>
-            {!gameSetup.isPvE && <Button onClick={handleBackToPreviousStep} disabled={gameHistory.length < 2}>Cansel step</Button>}
-            <Button onClick={() => navigate(-1)}>Exit</Button>
+                    new game
+                </Button>
+                {!gameSetup.isPvE &&
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleBackToPreviousStep}
+                        disabled={gameHistory.length < 2}
+                    >
+                        Cansel step
+                    </Button>
+                }
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => navigate(-1)}
+                >
+                    Exit
+                </Button>
+            </div>
         </div>
     );
 }
