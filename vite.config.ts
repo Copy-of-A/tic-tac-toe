@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: "docs",
   },
-  // base: "/tic-tac-toe/"
+  base: "/tic-tac-toe/"
 })
