@@ -42,7 +42,7 @@ const Game: React.FC = () => {
                 <Typography className="setup__group">{gameSetup.gamerSecond} : {rating.secondGamerVictories}</Typography>
                 <Typography className="setup__group">Draws: : {rating.draws}</Typography>
             </div>
-            <div>
+            <div className="page">
                 <h2>{status}</h2>
                 <Board
                     squares={squares}
@@ -51,6 +51,17 @@ const Game: React.FC = () => {
                     size={+borderSize}
                 />
             </div>
+            {!gameSetup.isPvE &&
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleBackToPreviousStep}
+                        disabled={gameHistory.length < 2}
+                        style={{marginTop: 20}}
+                    >
+                        Cansel step
+                    </Button>
+                }
             <div className="button-container">
                 <Button
                     variant="contained"
@@ -59,16 +70,6 @@ const Game: React.FC = () => {
                 >
                     new game
                 </Button>
-                {!gameSetup.isPvE &&
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleBackToPreviousStep}
-                        disabled={gameHistory.length < 2}
-                    >
-                        Cansel step
-                    </Button>
-                }
                 <Button
                     variant="contained"
                     color="secondary"

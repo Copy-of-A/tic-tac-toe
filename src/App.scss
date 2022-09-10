@@ -87,6 +87,10 @@ $medium-square: 30px;
   @media(max-width: $tiny-breakpoint) {
     height: 100px;
   }
+
+  &_3{
+    width: 1000px;
+  }
 }
 
 .page {
