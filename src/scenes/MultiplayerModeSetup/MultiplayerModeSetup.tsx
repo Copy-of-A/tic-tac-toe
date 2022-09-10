@@ -1,8 +1,7 @@
 import React from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Switch from "@mui/material/Switch";
 import useMultiplayerModeSetup from "./multiplayerModeSetup,hook";
+import { Button, TextField } from "@mui/material";
+import ChoosePlayerRadioGroup from "../../components/ChoosePlayerRadioGroup/ChoosePlayerRadioGroup";
 
 const Mode: React.FC = () => {
     const {
@@ -21,7 +20,7 @@ const Mode: React.FC = () => {
             <TextField
                 label="Gamer 1"
                 variant="outlined"
-                helperText={error.nameFirstError || "Enter name"} 
+                helperText={error.nameFirstError || "Enter name"}
                 color="secondary"
                 onChange={handleChangeName1}
                 error={!!error.nameFirstError}
@@ -31,19 +30,21 @@ const Mode: React.FC = () => {
             <TextField
                 label="Gamer 2"
                 variant="outlined"
-                helperText={error.nameSecondError || "Enter name"} 
+                helperText={error.nameSecondError || "Enter name"}
                 color="secondary"
                 onChange={handleChangeName2}
                 error={!!error.nameSecondError}
                 onBlur={onBlur}
                 onFocus={onBlur}
             />
-            <span>First gamer play for "X": </span>
-            <Switch
-                checked={form.isX}
-                onChange={handleChangeX}
-                value="checked"
-                color="primary"
+            <ChoosePlayerRadioGroup
+                value={form.xPlayer.toString()}
+                handleChange={handleChangeX}
+                labels={[
+                    "First player",
+                    "Second player",
+                    "Choose at random"
+                ]}
             />
             <div className="flex-jstf">
                 <Button

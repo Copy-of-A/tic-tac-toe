@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../App";
+import { getRandomNumber } from "../../helper";
 
 const useSinglePlayerModeSetup = () => {
     const navigate = useNavigate();
-    const [form, setForm] = useState<{ name: string; isX: boolean }>({
+    const [form, setForm] = useState<{ name: string; xPlayer: number }>({
         name: "",
-        isX: true,
+        xPlayer: 1,
     });
     const { setGameSetup } = useContext(GameContext);
     const [error, setError] = useState<boolean>(false);
@@ -21,7 +22,7 @@ const useSinglePlayerModeSetup = () => {
     const handleChangeX = (event: React.ChangeEvent<HTMLInputElement>) => {
         setForm((form) => ({
             ...form,
-            isX: event.target.checked,
+            xPlayer: +(event.target as HTMLInputElement).value,
         }));
     };
 
@@ -33,8 +34,8 @@ const useSinglePlayerModeSetup = () => {
         setGameSetup({
             gamerFirst: form.name,
             gamerSecond: "computer",
-            isFirstForX: form.isX,
-            isPvP: false,
+            isFirstForX: form.xPlayer === 0 ? getRandomNumber(1, 3) === 1 : form.xPlayer === 1,
+            isPvE: true,
         });
         navigate('/game', { replace: true })
     }

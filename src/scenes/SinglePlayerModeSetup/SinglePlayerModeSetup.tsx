@@ -1,7 +1,6 @@
-import Button from "@mui/material/Button";
-import Switch from "@mui/material/Switch";
-import TextField from "@mui/material/TextField";
+import { Button, TextField } from "@mui/material";
 import React from "react";
+import ChoosePlayerRadioGroup from "../../components/ChoosePlayerRadioGroup/ChoosePlayerRadioGroup";
 import useSinglePlayerModeSetup from "./singlePlayerModeSetup.hook";
 
 const Mode: React.FC = () => {
@@ -27,12 +26,14 @@ const Mode: React.FC = () => {
                 onBlur={() => setError(false)}
                 onFocus={() => setError(false)}
             />
-            <span>Play for "X": </span>
-            <Switch
-                checked={form.isX}
-                onChange={handleChangeX}
-                value="checked"
-                color="primary"
+            <ChoosePlayerRadioGroup
+                value={form.xPlayer.toString()}
+                handleChange={handleChangeX}
+                labels={[
+                    "You",
+                    "Computer",
+                    "Choose at random"
+                ]}
             />
             <div className="flex-jstf">
                 <Button

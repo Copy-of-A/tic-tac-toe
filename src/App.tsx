@@ -11,17 +11,17 @@ export interface GameSetup {
   gamerFirst: string | null;
   gamerSecond: string | null;
   isFirstForX: boolean;
-  isPvP: boolean;
+  isPvE: boolean;
 }
 
 export const GameContext = React.createContext({
-  gameSetup: { gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvP: true } as GameSetup,
+  gameSetup: { gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvE: false } as GameSetup,
   setGameSetup: (gameSetup: GameSetup) => {}
 });
 
 function App() {
 
-  const [gameSetup, setGameSetup] = useState<GameSetup>({ gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvP: true });
+  const [gameSetup, setGameSetup] = useState<GameSetup>({ gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvE: false });
   const value = { gameSetup, setGameSetup };
 
   return (

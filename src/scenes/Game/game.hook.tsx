@@ -2,6 +2,7 @@ import { SelectChangeEvent } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../App";
+import { delay } from "../../helper";
 import { getFreeSquares, getWinner, WinningCombination } from "./game.algoritms";
 
 const X = "X";
@@ -29,18 +30,27 @@ const useGame = () => {
     });
     const [isDeadHeat, setDeadHeat] = useState<boolean>(false);
     const [lastWinner, setLastWinner] = useState<number | null>(null);
+    const [isComputerMoving, setComputerMoving] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!gameSetup.isPvP && (isX && !gameSetup.isFirstForX || !isX && gameSetup.isFirstForX)) {
-            setTimeout(() => computerHandleClick(), 1000);
+        if (gameSetup.isPvE && (isX && !gameSetup.isFirstForX || !isX && gameSetup.isFirstForX)) {
+            setComputerMoving(true);
+            delay(1000).then(() => {
+                computerHandleClick();
+                setComputerMoving(false)
+            });
         }
     }, [isX]);
 
     useEffect(() => {
         if (gameSetup.gamerFirst === null) navigate("/");
-    }, [gameSetup])
+    }, [gameSetup]);
+
+    useEffect(() => {
+        console.log("isComputerMoving", isComputerMoving)
+    }, [isComputerMoving])
 
     useEffect(() => {
         setSquares(Array((+borderSize) ** 2).fill(null));
@@ -86,11 +96,11 @@ const useGame = () => {
         const randomNum = Math.floor(
             Math.random() * Math.floor(_freeSquares.length)
         );
-        handleClick(_freeSquares[randomNum]);
+        handleClick(_freeSquares[randomNum], true);
     };
 
-    const handleClick = (i: number) => {
-        if (squares[i] || winningCombination) return;
+    const handleClick = (i: number, isSynth?: boolean) => {
+        if (squares[i] || winningCombination || !isSynth && isComputerMoving) return;
         const _squares = [...squares];
         _squares[i] = isX ? X : O;
         setSquares(_squares);
@@ -155,6 +165,7 @@ const useGame = () => {
         setSquares(Array((+borderSize) ** 2).fill(null));
         setDeadHeat(false);
         setIsX(true);
+        setGameHistory([Array((+borderSize) ** 2).fill(null)]);
     };
 
     const handleChangeBorderSize = (event: SelectChangeEvent) => {

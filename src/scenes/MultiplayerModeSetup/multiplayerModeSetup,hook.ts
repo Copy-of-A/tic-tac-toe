@@ -1,13 +1,20 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../App";
+import { getRandomNumber } from "../../helper";
+
+interface Form {
+    nameFirst: string; 
+    nameSecond: string; 
+    xPlayer: number;
+}
 
 const useMultiplayerModeSetup = () => {
     const { setGameSetup } = useContext(GameContext);
-    const [form, setForm] = useState<{ nameFirst: string; nameSecond: string, isX: boolean }>({
+    const [form, setForm] = useState<Form>({
         nameFirst: "",
         nameSecond: "",
-        isX: true,
+        xPlayer: 1,
     });
     const [error, setErrors] = useState<{ nameFirstError: string | null; nameSecondError: string | null }>({
         nameFirstError: null,
@@ -21,8 +28,8 @@ const useMultiplayerModeSetup = () => {
         setGameSetup({
             gamerFirst: form.nameFirst,
             gamerSecond: form.nameSecond,
-            isFirstForX: form.isX,
-            isPvP: true,
+            isFirstForX: form.xPlayer === 0 ? getRandomNumber(1, 3) === 1 : form.xPlayer === 1,
+            isPvE: false,
         });
         navigate('/game', { replace: true });
     }
@@ -76,9 +83,10 @@ const useMultiplayerModeSetup = () => {
     const handleChangeX = (event: React.ChangeEvent<HTMLInputElement>) => {
         setForm((form) => ({
             ...form,
-            isX: event.target.checked,
+            xPlayer: +(event.target as HTMLInputElement).value,
         }));
     };
+
     return {
         error,
         handleChangeName1,

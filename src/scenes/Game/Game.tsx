@@ -47,7 +47,7 @@ const Game: React.FC = () => {
                 size={+borderSize}
             />
             <Button onClick={newGameHandleClick}>new game</Button>
-            <Button onClick={handleBackToPreviousStep} disabled={gameHistory.length < 2}>Cansel step</Button>
+            {!gameSetup.isPvE && <Button onClick={handleBackToPreviousStep} disabled={gameHistory.length < 2}>Cansel step</Button>}
             <Button onClick={() => navigate(-1)}>Exit</Button>
         </div>
     );
