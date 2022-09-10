@@ -35,7 +35,7 @@ function App() {
     <GameContext.Provider value={value}>
       <ThemeProvider theme={darkTheme}>
         <Routes>
-          <Route path="/tic-tac-toe" element={<Mode />} />
+          <Route path="/" element={<Mode />} />
           <Route path="pvp" element={<PvPSetup />} />
           <Route path="pve" element={<PvESetup />} />
           <Route path="game" element={<Game />} />
