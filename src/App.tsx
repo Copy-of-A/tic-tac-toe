@@ -36,9 +36,9 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <Routes>
           <Route path="/mode" element={<Mode />} />
-          <Route path="pvp" element={<PvPSetup />} />
-          <Route path="pve" element={<PvESetup />} />
-          <Route path="game" element={<Game />} />
+          <Route path="/pvp" element={<PvPSetup />} />
+          <Route path="/pve" element={<PvESetup />} />
+          <Route path="/game" element={<Game />} />
           {/* <Route path="*" element={<Navigate to="/mode" replace />} /> */}
         </Routes>
       </ThemeProvider>
