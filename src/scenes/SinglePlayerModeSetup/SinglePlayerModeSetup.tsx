@@ -2,6 +2,9 @@ import { Button, TextField } from "@mui/material";
 import React from "react";
 import ChooseXPlayerRadioGroup from "../../components/ChooseXPlayerRadioGroup/ChooseXPlayerRadioGroup";
 import useSinglePlayerModeSetup from "./singlePlayerModeSetup.hook";
+import styles from "../scenes.module.scss";
+import { cn } from "../../helper";
+import { NAME_CHARACTER_LIMIT } from "../../const";
 
 const Mode: React.FC = () => {
     const {
@@ -15,18 +18,21 @@ const Mode: React.FC = () => {
     } = useSinglePlayerModeSetup();
 
     return (
-        <div className="page">
-            <div className="page setup">
+        <div className={styles.page}>
+            <div className={cn(styles.page, styles.setup)}>
                 <TextField
                     label="Name"
                     variant="outlined"
-                    helperText={error ? "Shouldn`t be empty" : "Enter your name"}
+                    helperText={error ? "Shouldn`t be empty" : `Enter your name (${form.name.length}/${NAME_CHARACTER_LIMIT})`}
                     color="secondary"
                     error={error}
                     onChange={handleChangeName}
                     onBlur={() => setError(false)}
                     onFocus={() => setError(false)}
                     fullWidth
+                    inputProps={{
+                        maxLength: NAME_CHARACTER_LIMIT,
+                    }}
                 />
                 <ChooseXPlayerRadioGroup
                     value={form.xPlayer.toString()}
@@ -36,18 +42,26 @@ const Mode: React.FC = () => {
                         "Computer",
                         "Choose at random"
                     ]}
-                    className="setup__group setup__group_margin"
+                    className={cn(styles.setupGroup, styles.setupGroupMargin)}
                 />
             </div>
-            <div className="button-container">
+            <div className={styles.buttonContainer}>
                 <Button
                     onClick={() => navigate(-1)}
                     variant="contained"
-                    color="secondary">Back</Button>
+                    color="secondary"
+                    className={styles.button}
+                >
+                    Back
+                </Button>
                 <Button
                     onClick={onStartClick}
                     variant="contained"
-                    color="secondary">Play</Button>
+                    color="secondary"
+                    className={styles.button}
+                >
+                    Play
+                </Button>
             </div>
         </div>
     );

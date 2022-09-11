@@ -49,21 +49,23 @@ const useMultiplayerModeSetup = () => {
     }
 
     const validate = () => {
+        let flag = true;
         if (!form.nameFirst) {
             setErrors((errors) => ({
                 ...errors,
                 nameFirstError: "Shouldn`t be empty"
             }))
-            return false;
+            flag = false;
         }
         if (!form.nameSecond) {
             setErrors((errors) => ({
                 ...errors,
                 nameSecondError: "Shouldn`t be empty"
             }))
-            return false;
+            flag = false;
         }
-        else if (form.nameFirst === form.nameSecond) {
+        if (!flag) return flag;
+        if (form.nameFirst === form.nameSecond) {
             setErrors((errors) => ({
                 nameFirstError: "Shouldn`t be equal",
                 nameSecondError: "Shouldn`t be equal",

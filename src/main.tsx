@@ -6,8 +6,8 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <HashRouter 
-    // basename={import.meta.env.VITE_APP_BASE_PATH as string}
+    <HashRouter
+      basename={import.meta.env.VITE_APP_BASE_PATH as string}
     >
       <App />
     </HashRouter>

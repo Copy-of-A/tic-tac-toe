@@ -1,16 +1,17 @@
 import React from "react";
+import { cn } from "../../helper";
 
 export interface SquareProps {
-    value: string;
-    winningCombination: boolean;
-    onClick: () => void;
+  value: string;
+  winningCombination: boolean;
+  onClick: () => void;
 };
 
 const Square: React.FC<SquareProps> = ({ value, winningCombination, onClick }) => {
   return (
-    <div className="square" onClick={onClick} style={winningCombination ? {background: "green"} : {background: "inherit"}}>
+    <button className={cn("square", winningCombination && "square-win")} onClick={onClick}>
       {value}
-    </div>
+    </button>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { WinningCombination } from "../../scenes/Game/game.algoritms";
 import Square from "../Square/Square";
+import styles from './board.module.scss'
 
 export interface BoardProps {
     squares: string[];
@@ -10,26 +11,19 @@ export interface BoardProps {
 };
 
 const Board: React.FC<BoardProps> = ({ squares, winningCombination, size, onClick }) => {
-    function getSquare(i: number) {
-        return (
-            <Square
-                key={i}
-                value={squares[i]}
-                onClick={() => onClick(i)}
-                winningCombination={!!winningCombination?.lineNumberArray && winningCombination?.lineNumberArray?.findIndex(el => el === i) !== -1}
-            />
-        );
-    }
-
-    function getAllSquares() {
-        let arr = [];
-        for (let i = 0; i < squares.length; i++) {
-            arr.push(getSquare(i));
-        }
-        return arr;
-    }
-
-    return <div className={`grid grid_${size}`}>{getAllSquares()}</div>;
+    return (
+        <div className={`grid grid_${size}`}>
+            {squares.map((_, i) => (
+                <Square
+                    key={i}
+                    value={squares[i]}
+                    onClick={() => onClick(i)}
+                    winningCombination={!!winningCombination?.lineNumberArray &&
+                        winningCombination?.lineNumberArray?.findIndex(el => el === i) !== -1}
+                />
+            ))}
+        </div>
+    );
 }
 
 export default Board;

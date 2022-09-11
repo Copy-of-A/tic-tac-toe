@@ -2,6 +2,9 @@ import React from "react";
 import useMultiplayerModeSetup from "./multiplayerModeSetup.hook";
 import { Button, TextField } from "@mui/material";
 import ChooseXPlayerRadioGroup from "../../components/ChooseXPlayerRadioGroup/ChooseXPlayerRadioGroup";
+import styles from "../scenes.module.scss";
+import { cn } from "../../helper";
+import { NAME_CHARACTER_LIMIT } from "../../const";
 
 const Mode: React.FC = () => {
     const {
@@ -16,31 +19,34 @@ const Mode: React.FC = () => {
     } = useMultiplayerModeSetup();
 
     return (
-        <div className="page">
-            <div className="page setup">
+        <div className={styles.page}>
+            <div className={cn(styles.page, styles.setup)}>
                 <TextField
                     label="Player 1"
                     variant="outlined"
-                    helperText={error.nameFirstError || "Enter first player name"}
+                    helperText={error.nameFirstError || `Enter first player name (${form.nameFirst.length}/${NAME_CHARACTER_LIMIT})`}
                     color="secondary"
                     onChange={handleChangeName1}
                     error={!!error.nameFirstError}
                     onBlur={onBlur}
                     onFocus={onBlur}
                     fullWidth
-                    className="setup__text-field setup__text-field_bottom"
+                    inputProps={{
+                        maxLength: NAME_CHARACTER_LIMIT,
+                    }}
+                    className={cn(styles.setupTextField, styles.setupTextFieldBottom)}
                 />
                 <TextField
                     label="Player 2"
                     variant="outlined"
-                    helperText={error.nameSecondError || "Enter second player name"}
+                    helperText={error.nameSecondError || `Enter second player name (${form.nameSecond.length}/${NAME_CHARACTER_LIMIT})`}
                     color="secondary"
                     onChange={handleChangeName2}
                     error={!!error.nameSecondError}
                     onBlur={onBlur}
                     onFocus={onBlur}
                     fullWidth
-                    className="setup__text-field"
+                    className={styles.setupTextField}
                 />
                 <ChooseXPlayerRadioGroup
                     value={form.xPlayer.toString()}
@@ -50,14 +56,15 @@ const Mode: React.FC = () => {
                         "Second player",
                         "Choose at random"
                     ]}
-                    className="setup__group setup__group_margin"
+                    className={cn(styles.setupGroup, styles.setupGroupMargin)}
                 />
             </div>
-            <div className="button-container">
+            <div className={styles.buttonContainer}>
                 <Button
                     onClick={() => navigate(-1)}
                     variant="contained"
                     color="secondary"
+                    className={styles.button}
                 >
                     Back
                 </Button>
@@ -65,6 +72,7 @@ const Mode: React.FC = () => {
                     onClick={onStartClick}
                     variant="contained"
                     color="secondary"
+                    className={styles.button}
                 >
                     Play
                 </Button>

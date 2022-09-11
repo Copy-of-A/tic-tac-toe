@@ -1,0 +1,11 @@
+$tiny-breakpoint: 390px;
+$small-breakpoint: 450px;
+$medium-breakpoint: 600px;
+$big-breakpoint: 900px;
+
+:export {
+  tiny-breakpoint: $tiny-breakpoint;
+  small-breakpoint: $small-breakpoint;
+  medium-breakpoint: $medium-breakpoint;
+  big-breakpoint: $big-breakpoint;
+}

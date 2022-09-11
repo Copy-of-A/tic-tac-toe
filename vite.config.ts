@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: "docs",
   },
-  base: "/tic-tac-toe/"
+  base: process.env.NODE_ENV === "production" ? "/tic-tac-toe/" : ""
 })

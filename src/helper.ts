@@ -1,9 +1,11 @@
 export const getRandomNumber = (min: number, max: number) => {
-    return Math.random() * (max - min) + min;
+  return Math.random() * (max - min) + min;
 };
 
 export function delay(ms: number) {
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, ms);
-    });
-  }
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+export const cn = (...classNames: Array<string | boolean>) => classNames.filter(Boolean).join(" ");
