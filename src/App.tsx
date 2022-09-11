@@ -1,35 +1,34 @@
 import './App.scss'
 import Mode from './scenes/Mode/Mode'
-import { Navigate, Route, Routes } from "react-router-dom";
-import PvPSetup from './scenes/MultiplayerModeSetup/MultiplayerModeSetup';
-import PvESetup from './scenes/SinglePlayerModeSetup/SinglePlayerModeSetup';
-import Game from './scenes/Game/Game';
-import { useState } from 'react';
-import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Navigate, Route, Routes } from 'react-router-dom'
+import PvPSetup from './scenes/MultiplayerModeSetup/MultiplayerModeSetup'
+import PvESetup from './scenes/SinglePlayerModeSetup/SinglePlayerModeSetup'
+import Game from './scenes/Game/Game'
+import { useState } from 'react'
+import React from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 export interface GameSetup {
-  gamerFirst: string | null;
-  gamerSecond: string | null;
-  isFirstForX: boolean;
-  isPvE: boolean;
+  gamerFirst: string | null
+  gamerSecond: string | null
+  isFirstForX: boolean
+  isPvE: boolean
 }
 
 export const GameContext = React.createContext({
   gameSetup: { gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvE: false } as GameSetup,
-  setGameSetup: (gameSetup: GameSetup) => { }
-});
+  setGameSetup: (gameSetup: GameSetup) => {},
+})
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
-});
+})
 
 function App() {
-
-  const [gameSetup, setGameSetup] = useState<GameSetup>({ gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvE: false });
-  const value = { gameSetup, setGameSetup };
+  const [gameSetup, setGameSetup] = useState<GameSetup>({ gamerFirst: null, gamerSecond: null, isFirstForX: true, isPvE: false })
+  const value = { gameSetup, setGameSetup }
 
   return (
     <GameContext.Provider value={value}>
@@ -43,7 +42,6 @@ function App() {
         </Routes>
       </ThemeProvider>
     </GameContext.Provider>
-
   )
 }
 

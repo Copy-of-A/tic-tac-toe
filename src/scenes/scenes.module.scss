@@ -1,64 +1,64 @@
-@import "../App.scss";
+@import '../App.scss';
 
 .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    width: 700px;
-    margin-top: 50px;
-  
-    @media(max-width: $big-breakpoint) {
-      align-items: center;
-      flex-direction: column;
-      height: 130px;
-      width: auto;
-    }
-  
-    @media(max-width: $tiny-breakpoint) {
-      height: 100px;
-    }
-  
-    &_3{
-      width: 1000px;
-    }
-  }
-  
-  .page {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+  margin-top: 50px;
+
+  @media (max-width: $big-breakpoint) {
     align-items: center;
+    flex-direction: column;
+    height: 130px;
+    width: auto;
   }
-  
-  .setup {
-    width: 320px;
-  
-    @media(max-width: $tiny-breakpoint) {
-      width: 250px;
-    }
-  
-    &Group {
-      align-self: flex-start;
-      text-align: left;
-  
-      &Margin {
-        margin-top: 30px !important;
-      }
-    }
-  
-    &TextField {
-      &Bottom {
-        margin-bottom: 15px !important;
-      }
+
+  @media (max-width: $tiny-breakpoint) {
+    height: 100px;
+  }
+
+  &_3 {
+    width: 1000px;
+  }
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setup {
+  width: 320px;
+
+  @media (max-width: $tiny-breakpoint) {
+    width: 250px;
+  }
+
+  &Group {
+    align-self: flex-start;
+    text-align: left;
+
+    &Margin {
+      margin-top: 30px !important;
     }
   }
 
-  .button {
-    width: 320px;
-    height: 50px;
-    font-size: 16px;
-  
-    @media(max-width: $tiny-breakpoint) {
-      width: 250px;
-      height: 40px;
-      flex-direction: column;
+  &TextField {
+    &Bottom {
+      margin-bottom: 15px !important;
     }
   }
+}
+
+.button {
+  width: 320px;
+  height: 50px;
+  font-size: 16px;
+
+  @media (max-width: $tiny-breakpoint) {
+    width: 250px;
+    height: 40px;
+    flex-direction: column;
+  }
+}

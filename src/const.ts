@@ -1,1 +1,1 @@
-export const NAME_CHARACTER_LIMIT = 20;
+export const NAME_CHARACTER_LIMIT = 20
