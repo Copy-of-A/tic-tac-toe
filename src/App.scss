@@ -18,6 +18,13 @@
     line-height: 50px;
     text-align: center;
     background-color: inherit;
+    display: block;
+    padding: 0;
+    outline: none;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    color: white;
 
     &-win {
       background-color: green;
