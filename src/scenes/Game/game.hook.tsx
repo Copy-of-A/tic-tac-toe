@@ -43,6 +43,11 @@ const useGame = () => {
   }, [isX])
 
   useEffect(() => {
+    setGameHistory([Array((+borderSize) ** 2).fill(null)]);
+  }, [borderSize])
+
+
+  useEffect(() => {
     if (gameSetup.gamerFirst === null) navigate('/mode')
   }, [gameSetup])
 
